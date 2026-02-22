@@ -1,0 +1,190 @@
+{
+  "name": "takeitoutback",
+  "displayName": "Take It Out Back",
+  "description": "A lightweight task-manager-style process manager for macOS and Linux, embedded in VS Code.",
+  "version": "0.1.0",
+  "publisher": "martinhundrup",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "takeitoutback",
+          "title": "Take It Out Back",
+          "icon": "media/shotgun.svg"
+        }
+      ]
+    },
+    "views": {
+      "takeitoutback": [
+        {
+          "id": "takeitoutback.processTree",
+          "name": "Processes"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "takeitoutback.refresh",
+        "title": "Refresh Processes",
+        "icon": "$(refresh)",
+        "category": "Take It Out Back"
+      },
+      {
+        "command": "takeitoutback.terminate",
+        "title": "Terminate Process (SIGTERM)",
+        "category": "Take It Out Back"
+      },
+      {
+        "command": "takeitoutback.forceKill",
+        "title": "Force Kill Process (SIGKILL)",
+        "category": "Take It Out Back"
+      },
+      {
+        "command": "takeitoutback.killGroup",
+        "title": "Kill Process Group",
+        "category": "Take It Out Back"
+      },
+      {
+        "command": "takeitoutback.killSubtree",
+        "title": "Kill Process Subtree",
+        "category": "Take It Out Back"
+      },
+      {
+        "command": "takeitoutback.copyPid",
+        "title": "Copy PID",
+        "category": "Take It Out Back"
+      },
+      {
+        "command": "takeitoutback.copyCommand",
+        "title": "Copy Command",
+        "category": "Take It Out Back"
+      },
+      {
+        "command": "takeitoutback.togglePause",
+        "title": "Pause/Resume Polling",
+        "icon": "$(debug-pause)",
+        "category": "Take It Out Back"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "takeitoutback.refresh",
+          "when": "view == takeitoutback.processTree",
+          "group": "navigation"
+        },
+        {
+          "command": "takeitoutback.togglePause",
+          "when": "view == takeitoutback.processTree",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "takeitoutback.terminate",
+          "when": "view == takeitoutback.processTree",
+          "group": "kill@1"
+        },
+        {
+          "command": "takeitoutback.forceKill",
+          "when": "view == takeitoutback.processTree",
+          "group": "kill@2"
+        },
+        {
+          "command": "takeitoutback.killGroup",
+          "when": "view == takeitoutback.processTree",
+          "group": "kill@3"
+        },
+        {
+          "command": "takeitoutback.killSubtree",
+          "when": "view == takeitoutback.processTree",
+          "group": "kill@4"
+        },
+        {
+          "command": "takeitoutback.copyPid",
+          "when": "view == takeitoutback.processTree",
+          "group": "copy@1"
+        },
+        {
+          "command": "takeitoutback.copyCommand",
+          "when": "view == takeitoutback.processTree",
+          "group": "copy@2"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Take It Out Back",
+      "properties": {
+        "takeitoutback.refreshIntervalMs": {
+          "type": "number",
+          "default": 1000,
+          "minimum": 500,
+          "description": "Process list refresh interval in milliseconds."
+        },
+        "takeitoutback.showSystemProcesses": {
+          "type": "boolean",
+          "default": false,
+          "description": "Show processes owned by system users (root, daemon, etc.)."
+        },
+        "takeitoutback.showOtherUsers": {
+          "type": "boolean",
+          "default": false,
+          "description": "Show processes owned by other users."
+        },
+        "takeitoutback.cpuAlertThreshold": {
+          "type": "number",
+          "default": 90,
+          "minimum": 0,
+          "maximum": 100,
+          "description": "CPU percentage threshold for high-CPU alerts."
+        },
+        "takeitoutback.runtimeAlertSeconds": {
+          "type": "number",
+          "default": 0,
+          "minimum": 0,
+          "description": "Runtime threshold in seconds for long-running process alerts. 0 disables."
+        },
+        "takeitoutback.confirmBeforeKill": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show confirmation dialog before killing a process."
+        },
+        "takeitoutback.enableSFX": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable sound effects for process events."
+        },
+        "takeitoutback.sfx.pathCock": {
+          "type": "string",
+          "default": "",
+          "description": "Custom path to a shotgun-cock sound file. Leave empty to use the bundled default (media/sfx/cock.mp3)."
+        },
+        "takeitoutback.sfx.pathFire": {
+          "type": "string",
+          "default": "",
+          "description": "Custom path to a shotgun-fire sound file. Leave empty to use the bundled default (media/sfx/fire.mp3)."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.3.0",
+    "@vscode/vsce": "^3.0.0"
+  }
+}

@@ -1,0 +1,1 @@
+svg icon can be attributed to game-icons.net, taken from https://www.svgrepo.com/svg/323242/shotgun-rounds, under the CC Attribution License.
